@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>StyleEyes</title>
+  <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+  <style>
+    .bar {
+      background-color:black;
+      display: inline-block;
+      position: absolute;
+    }
+    .bar--horizontal:before,
+    .bar--horizontal:after {
+      content: '';
+      display: block;
+      height: 7px;
+      width: 1px;
+      background: black;
+      position: absolute;
+      top: -3px;
+    }
+    .bar--horizontal:before {
+      left: 0;
+    }
+    .bar--horizontal:after {
+      right: 0;   
+    }
+    .bar--vertical:before,
+    .bar--vertical:after {
+      content: '';
+      display: block;
+      height: 1px;
+      width: 7px;
+      background: black;
+      position: absolute;
+      left: -3px;
+    }
+    .bar--vertical:before {
+      top: 0;
+    }
+    .bar--vertical:after {
+      bottom: 0;   
+    }
+    .spec {
+      padding: 5px;
+      position: absolute;
+    }
+    
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>StyleEyes</h1>
+    <button class="waves-effect waves-light btn styleeyes">Button</button>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+  <script>
+    function init() {
+      var el = document.querySelector('.styleeyes'),
+          width = Math.round(window.getComputedStyle(el, null).width.slice(0, -2)),
+          height = Math.round(window.getComputedStyle(el, null).height.slice(0, -2)),
+          offsetTop = el.offsetTop,
+          offsetLeft = el.offsetLeft;
+
+      var widthBar = document.createElement('span');
+      widthBar.setAttribute('style', `width:${width}px;height:1px;top:${offsetTop+(height+10)}px;left:${offsetLeft}px;`);
+      widthBar.setAttribute('class', `bar bar--horizontal`);
+      el.parentElement.insertBefore(widthBar, el);
+      var widthText = document.createElement('span');
+      widthText.setAttribute('style', `top:0;left:50%;transform:translateX(-50%)`);
+      widthText.setAttribute('class', `spec`);
+      widthText.appendChild(document.createTextNode(`${width}px`));
+      widthBar.appendChild(widthText);
+
+      var heightBar = document.createElement('span');
+      heightBar.setAttribute('style', `width:1px;height:${height}px;top:${offsetTop}px;left:${offsetLeft+(width+10)}px;`);
+      heightBar.setAttribute('class', `bar bar--vertical`);
+      el.parentElement.insertBefore(heightBar, el);
+      var heightText = document.createElement('span');
+      heightText.setAttribute('style', `top:50%;left:0;transform:translateY(-50%)`);
+      heightText.setAttribute('class', `spec`);
+      heightText.appendChild(document.createTextNode(`${height}px`));
+      heightBar.appendChild(heightText);
+    }
+
+    setTimeout(init, 300)
+    
+  </script>
+</body>
+</html>
